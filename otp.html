@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Enter OTP</title>
+</head>
+<body>
+    <form action="otp_process.php" method="post">
+        <label for="otp">Enter OTP:</label>
+        <input type="text" id="otp" name="otp" required>
+        <button type="submit">Verify</button>
+    </form>
+
+    <?php
+    session_start();
+    include 'dbconnect.php';
+
+    // Generate a random 6-digit OTP
+    $otp = rand(100000, 999999);
+
+    // Save OTP in session for later verification
+    $_SESSION['otp'] = $otp;
+
+    // Get user's email from form or database
+    $email = $_POST['email']; // or fetch from DB if needed
+
+    // Compose email
+    $subject = "Your OTP Code";
+    $message = "Your OTP is: $otp";
+    $headers = "From: no-reply@yourdomain.com";
+
+    // Send email
+    if (mail($email, $subject, $message, $headers)) {
+        echo "OTP sent!";
+    } else {
+        echo "Failed to send OTP.";
+    }
+    ?>
+</body>
+</html>

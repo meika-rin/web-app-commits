@@ -1,0 +1,83 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log In</title>
+    <link rel="stylesheet" href="style.css">    
+</head>
+<body>      
+<div class="topnav">
+    <!-- Top nav section -->
+    <a href="home.html">Home</a>
+    <a href="about.html">About</a>
+    <div class="topnav-right">
+        <a href="login.html">Sign In</a>
+        <a href="signup.html">Sign Up</a>
+    </div>
+</div>
+<div class="header">
+    <h1>Log In</h1>
+</div>
+<div class="content">
+    <h2>Log in to Your Account</h2>
+    <form id="loginForm" action="login_process.php" method="post">
+        <label for="username">Name:</label>
+        <input type="text" id="username" name="username" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="dob">Date of Birth:</label>
+        <input type="date" id="dob" name="dob" required>
+        
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        
+        <button type="submit">Sign In</button>
+    </form>
+
+    <script>
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        // Name validation: only letters, spaces, hyphens, apostrophes
+        const name = document.getElementById('username').value.trim();
+        const namePattern = /^[A-Za-z\s'-]+$/;
+        if (!namePattern.test(name)) {
+            alert("Name can only contain letters, spaces, hyphens, and apostrophes.");
+            e.preventDefault();
+            return;
+        }
+
+        // Email validation
+        const email = document.getElementById('email').value.trim();
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailPattern.test(email)) {
+            alert("Please enter a valid email address.");
+            e.preventDefault();
+            return;
+        }
+
+        // Date range validation (e.g., between 1900-01-01 and today)
+        const dob = document.getElementById('dob').value;
+        const minDate = new Date('1900-01-01');
+        const maxDate = new Date();
+        const userDate = new Date(dob);
+        if (userDate < minDate || userDate > maxDate) {
+            alert("Date of birth must be between 1900-01-01 and today.");
+            e.preventDefault();
+            return;
+        }
+
+        // Password validation
+        const password = document.getElementById('password').value;
+        if (password.length < 6) {
+            alert("Password must be at least 6 characters.");
+            e.preventDefault();
+            return;
+        }
+    });
+    </script>
+</div>
+</body>
+</html>
